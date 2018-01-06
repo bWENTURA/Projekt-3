@@ -9,4 +9,7 @@ class wagon{
   virtual void get(std::istream& in) = 0;
 };
 
+std::istream& operator>>(std::istream& in, wagon& this_wagon);
+std::ostream& operator<<(std::ostream& out, const wagon& this_wagon);
+
 #endif

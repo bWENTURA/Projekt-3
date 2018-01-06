@@ -12,7 +12,4 @@ class material_wagon : public wagon{
   void get(std::istream& in);
 };
 
-std::istream& operator>>(std::istream& in, material_wagon& this_material_wagon);
-std::ostream& operator<<(std::ostream& out, const material_wagon& this_material_wagon);
-
 #endif
