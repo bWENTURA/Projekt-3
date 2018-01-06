@@ -1,19 +1,14 @@
 #include "header.hpp"
+#include "wagon.hpp"
 #include "train.hpp"
 
-train::train(int number_person, int number_wagon) : number_of_personnel(number_person), number_of_wagons(number_wagon) {};
+train::train(int number_person, int number_wagon) : number_of_personnel(number_person), number_of_wagons(number_wagon) {}
 
 train::~train(){
   std::cout << "Destructor!" << std::endl;
-}
-
-void train::print(std::ostream& out) const{
-  out << LINE << "\n";
-  out << "Name: " << this->name << ".\n";
-  out << "Description: " << this->description << ".\n";
-  out << "Number of personnel: " << this->number_of_personnel << ".\n";
-  out << "Number of wagons: " << this->number_of_wagons << ".\n";
-  out << LINE << std::endl;
+  for(wagon * iterator: this->lwagons){
+    delete iterator;
+  }
 }
 
 std::istream& operator>>(std::istream& in, train& this_train){
@@ -31,6 +26,11 @@ std::istream& operator>>(std::istream& in, train& this_train){
 }
 
 std::ostream& operator<<(std::ostream& out, const train& this_train){
-  this_train.print(out);
+  out << LINE << "\n";
+  out << "Name: " << this_train.name << ".\n";
+  out << "Description: " << this_train.description << ".\n";
+  out << "Number of personnel: " << this_train.number_of_personnel << ".\n";
+  out << "Number of wagons: " << this_train.number_of_wagons << ".\n";
+  out << LINE << std::endl;
   return out;
 }
