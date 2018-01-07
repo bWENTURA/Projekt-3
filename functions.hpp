@@ -9,8 +9,10 @@ void add_wagon(train * train_ptr);
 
 void add_train(std::vector<train*> &train_contener);
 
-void find_train(std::vector<train*> &train_contener);
+bool find_train(std::vector<train*> &train_contener, train ** train_ptr);
 
 void show_trains(const std::vector<train*> &train_contener);
+
+void delete_train_wagon(std::vector<train*> &train_contener);
 
 #endif

@@ -13,10 +13,10 @@ bool character_input(char *operation){
       (*operation) = temp[0];
       return true;
     case 0:
-      std::cout << "Nie wprowadzono żadnego znaku." << std::endl;
+      std::cout << "Empty line entered." << std::endl;
       return false;
     default:
-      std::cout << "Wprowadziłeś więcej niż jeden znak." << std::endl;
+      std::cout << "More than one sign has been entered." << std::endl;
       return false;
   }
 }
@@ -28,7 +28,7 @@ char correct_character_input(char maximum, char exception){
   char sign;
   bool flag = character_input(&sign);
   while(!(flag && (sign == exception || (sign <= maximum && sign >= '1')))){
-    if(flag) std::cout << "Wprowadziłeś znak z nieodpowiedniego zakresu znak." << std:: endl;
+    if(flag) std::cout << "Wrong sign has been entered." << std:: endl;
     flag = character_input(&sign);
   }
   return sign;
@@ -66,24 +66,53 @@ void add_train(std::vector<train*> &train_contener){
   train_contener.push_back(train_ptr);
 }
 
-void find_train(std::vector<train*> &train_contener){
-  bool found = false;
+bool find_train(std::vector<train*> &train_contener, train ** train_ptr){
   std::string name;
   std::vector<train*>::iterator it;
   std::cout << "Enter name of the train you are looking for." << std::endl;
   getline(std::cin, name);
   for(it = train_contener.begin(); it != train_contener.end(); ++it){
     if((*it)->get_name() == name){
-      found = true;
-      break;
+      *train_ptr = *it;
+      return true;
     }
   }
-  if(found) add_wagon(*it);
-  else std::cout << LINE << "\nProgram couldn't find train with name \"" << name << "\".\n" << LINE << std::endl;
+  std::cout << LINE << "\nProgram couldn't find train with name \"" << name << "\".\n" << LINE << std::endl;
+  return false;
 }
 
 void show_trains(const std::vector<train*> &train_contener){
   for(std::vector<train*>::const_iterator it = train_contener.begin(); it != train_contener.end(); ++it){
     std::cout << **it;
+  }
+}
+
+void delete_train_wagon(std::vector<train*> &train_contener){
+  bool exit = false;
+  char operation;
+  while(!exit){
+    std::cout << "1. Delete train.\n" << "2. Delete wagon.\n" << "Type 'q' to exit." << std::endl;
+    operation = correct_character_input('2', 'q');
+    switch(operation){
+      case '1':{
+        train * train_ptr = NULL;
+        if(find_train(train_contener, &train_ptr)){
+          delete train_ptr;
+        }
+        break;
+      }
+      case '2':{
+        train * train_ptr = NULL;
+        if(find_train(train_contener, &train_ptr)){
+          std::cout << *train_ptr;
+          train_ptr->delete_wagon();
+        }
+        break;
+      }
+      case 'q':{
+        exit = true;
+        break;
+      }
+    }
   }
 }

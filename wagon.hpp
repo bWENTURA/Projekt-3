@@ -5,6 +5,7 @@ class wagon{
   public:
   wagon(){};
   virtual ~wagon(){};
+  virtual void set_number(int number) = 0;
   virtual void print(std::ostream& out) const = 0;
   virtual void get(std::istream& in) = 0;
 };

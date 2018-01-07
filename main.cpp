@@ -10,19 +10,26 @@ int main(){
   bool exit = false;
   char operation;
   while(exit != true){
-    std::cout << "Please enter the number of the operation you want to execute.\n" << "1. Create train.\n" << "2. Create wagon.\n" << "3. Show trains.\n" << "Type 'q' to exit." << std::endl;
-    operation = correct_character_input('3', 'q');
+    std::cout << "Please enter the number of the operation you want to execute.\n" << "1. Create train.\n" << "2. Create wagon.\n" << "3. Show trains.\n" << "4. Delete wagon or train.\n" << "Type 'q' to exit." << std::endl;
+    operation = correct_character_input('4', 'q');
     switch(operation){
       case '1':{
         add_train(train_contener);
         break;
       }
       case '2':{
-        find_train(train_contener);
+        train * train_ptr = NULL;
+        if(find_train(train_contener, &train_ptr)){
+          add_wagon(train_ptr);
+        }
         break;
       }
       case '3':{
         show_trains(train_contener);
+        break;
+      }
+      case '4':{
+        delete_train_wagon(train_contener);
         break;
       }
       case 'q':
