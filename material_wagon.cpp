@@ -19,8 +19,8 @@ void material_wagon::get(std::istream& in){
     this->empty = false;
     std::cout << "Please enter weight of the material." << std::endl;
     in >> this->weight;
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits < std::streamsize >::max(), '\n' );
+    in.clear();
+    in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
   }
 }
 

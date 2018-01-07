@@ -9,6 +9,7 @@ class train{
   std::list<wagon*> lwagons;
   void increase_number();
   void decrease_number();
+  bool get_number(std::istream& in);
   public:
   train(int number_person = 0, int number_waggon = 0);
   ~train();

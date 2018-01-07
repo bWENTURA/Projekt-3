@@ -1,6 +1,7 @@
 #include "header.hpp"
 #include "wagon.hpp"
 #include "material_wagon.hpp"
+#include "wagon_for_people.hpp"
 #include "train.hpp"
 
 void test(std::vector<train*> &train_contener){
@@ -8,25 +9,29 @@ void test(std::vector<train*> &train_contener){
   wagon * wagon_ptr;
   std::string input = "noexit";
   while(input != "exit"){
-    train_ptr = new train;
+    train_ptr = new train();
     std::cin >> *train_ptr;
     while(input != "exit"){
       std::cout << "1. Wagon for materials." << "\n";
       std::cout << "2. Wagon for people." << std::endl;
       int number;
+      std::cin.clear();
       std::cin >> number;
       std::cin.clear();
       std::cin.ignore( std::numeric_limits < std::streamsize >::max(), '\n' );
       switch(number){
         case 1:{
-          wagon_ptr = new material_wagon;
+          wagon_ptr = new material_wagon();
           std::cin >> *wagon_ptr;
           std::cout << *wagon_ptr;
           train_ptr->add_wagon(wagon_ptr);
           break;
         }
         case 2:{
-
+          wagon_ptr = new wagon_for_people();
+          std::cin >> *wagon_ptr;
+          std::cout << *wagon_ptr;
+          train_ptr->add_wagon(wagon_ptr);
           break;
         }
       }

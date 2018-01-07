@@ -1,6 +1,7 @@
 #include "header.hpp"
 #include "wagon.hpp"
 #include "material_wagon.hpp"
+#include "wagon_for_people.hpp"
 #include "train.hpp"
 #include "test.hpp"
 

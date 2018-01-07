@@ -29,10 +29,25 @@ std::istream& operator>>(std::istream& in, train& this_train){
   getline(in, this_train.name);
   std::cout << "Please enter description of the train." << std::endl;
   getline(in, this_train.description);
-  std::cout << "Please enter number of personnel in train." << std::endl;
-  in >> this_train.number_of_personnel;
-  std::cin.clear();
-  std::cin.ignore( std::numeric_limits < std::streamsize >::max(), '\n' );
+  in.exceptions(in.failbit);
+  do{
+    try{
+      if(!in){
+        std::cout << "Please enter number of personnel again." << std::endl;
+        in.clear();
+        std::cout << " there it is!" << std::endl;
+        in.ignore(std::numeric_limits < std::streamsize >::max(), '\n');
+      }
+      else std::cout << "Please enter number of personnel in train." << std::endl;
+      in >> this_train.number_of_personnel;
+    }
+    catch(std::exception& exception){
+      std::cout << "Exception happened: \"" << exception.what() << "\"" << std::endl;
+      std::cout << "Try again." << std::endl;
+    }
+  } while(!in);
+  in.clear();
+  in.ignore(std::numeric_limits < std::streamsize >::max(), '\n');
   return in;
 }
 
@@ -44,8 +59,11 @@ std::ostream& operator<<(std::ostream& out, const train& this_train){
   out << "Number of wagons: " << this_train.number_of_wagons << ".\n";
   if(this_train.lwagons.size()){
     for(std::list<wagon*>::const_iterator it = this_train.lwagons.begin(); it != this_train.lwagons.end(); ++it){
-      std::cout << *it;
+      out << **it;
     }
+    // for(wagon * iterator : this_train.lwagons){
+    //   out << *iterator;
+    // }
   }
   else out << LINE << std::endl;
   return out;
