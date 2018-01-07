@@ -13,7 +13,8 @@ class train{
   public:
   train(int number_person = 0, int number_waggon = 0);
   ~train();
-  void add_wagon(wagon* new_wagon);
+  std::string get_name();
+  void create_wagon(wagon* new_wagon);
   friend std::istream& operator>>(std::istream& in, train& this_train);
   friend std::ostream& operator<<(std::ostream& out, const train& this_train);
 };
