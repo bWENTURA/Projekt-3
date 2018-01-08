@@ -1,4 +1,5 @@
 #include "header.hpp"
+#include "input_functions.hpp"
 #include "wagon.hpp"
 #include "train.hpp"
 
@@ -29,6 +30,8 @@ bool train::get_number(std::istream& in, int &number){
     in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
     return false;
   }
+  in.clear();
+  in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
   return true;
 }
 
@@ -73,15 +76,13 @@ void train::delete_wagon(){
 
 std::istream& operator>>(std::istream& in, train& this_train){
   std::cout << "Please enter name of the train." << std::endl;
-  getline(in, this_train.name);
+  correct_string(in, this_train.name);
   std::cout << "Please enter description of the train." << std::endl;
-  getline(in, this_train.description);
+  correct_string(in, this_train.description);
   std::cout << "Please enter number of personnel in train." << std::endl;
   while(!this_train.get_number(in, this_train.number_of_personnel)){
     std::cout << "Please enter number of personnel again." << std::endl;
   }
-  in.clear();
-  in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
   return in;
 }
 

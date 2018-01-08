@@ -1,4 +1,5 @@
 #include "header.hpp"
+#include "input_functions.hpp"
 #include "wagon.hpp"
 #include "material_wagon.hpp"
 
@@ -17,6 +18,8 @@ bool material_wagon::get_weight(std::istream& in){
     in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
     return false;
   }
+  in.clear();
+  in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
   return true;
 }
 
@@ -25,20 +28,24 @@ void material_wagon::set_number(int number){
 }
 
 void material_wagon::get(std::istream& in){
-  std::string temp;
+  char operation;
   std::cout << "Please enter name of the material in material wagon." << std::endl;
-  getline(in, this->material);
-  std::cout << "Please write \"true\" if wagon is empty, otherwise type \"false\"." << std::endl;
-  getline(in, temp);
-  if(temp == "true") this->empty = true;
-  else{
+  correct_string(in, this->material);
+  std::cout << "1. Wagon is empty.\n" << "2. Wagon is not empty." << std::endl;
+  operation = correct_character_input('2');
+  switch(operation){
+    case '1':{
+      this->empty = true;
+      break;
+    }
+    case '2':{
     this->empty = false;
     std::cout << "Please enter weight of the material.(in kilograms)" << std::endl;
     while(!this->get_weight(in)){
       std::cout << "Please enter weight again." << std::endl;
     }
-    in.clear();
-    in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
+    break;
+    }
   }
 }
 

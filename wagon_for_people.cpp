@@ -1,4 +1,5 @@
 #include "header.hpp"
+#include "input_functions.hpp"
 #include "wagon.hpp"
 #include "wagon_for_people.hpp"
 
@@ -17,6 +18,8 @@ bool wagon_for_people::get_number_of_sitting_places(std::istream& in){
     in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
     return false;
   }
+  in.clear();
+  in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
   return true;
 }
 
@@ -25,21 +28,35 @@ void wagon_for_people::set_number(int number){
 }
 
 void wagon_for_people::get(std::istream& in){
-  std::string temp;
+  char operation;
   std::cout << "Please enter number of sitting places." << std::endl;
   while(!this->get_number_of_sitting_places(in)){
     std::cout << "Please enter number of sitting places again." << std::endl;
   }
-  in.clear();
-  in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
-  std::cout << "Please write \"true\" if wagon has place for bikes, otherwise type \"false\"." << std::endl;
-  getline(in, temp);
-  if(temp == "true") this->place_for_bikes = true;
-  else this->place_for_bikes = false;
-  std::cout << "Please write \"true\" if wagon has restaurant, otherwise type \"false\"." << std::endl;
-  getline(in, temp);
-  if(temp == "true") this->restaurant = true;
-  else this->restaurant = false;
+  std::cout << "1. Wagon has space for bikes.\n" << "2. Wagon hasn't got space for bikes." << std::endl;
+  operation = correct_character_input('2');
+  switch(operation){
+    case '1':{
+      this->place_for_bikes = true;
+      break;
+    }
+    case '2':{
+      this->place_for_bikes = false;
+      break;
+    }
+  }
+  std::cout << "1. Wagon has restaurant.\n" << "2. Wagon hasn't got restaurant." << std::endl;
+  operation = correct_character_input('2');
+  switch(operation){
+    case '1':{
+      this->restaurant = true;
+      break;
+    }
+    case '2':{
+      this->restaurant = false;
+      break;
+    }
+  }
 }
 
 void wagon_for_people::print(std::ostream& out) const{

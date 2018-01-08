@@ -1,9 +1,5 @@
-#ifndef FUNCTIONS_HPP
-#define FUNCTIONS_HPP
-
-bool character_input(char *operation);
-
-char correct_character_input(char maximum, char exception = '1');
+#ifndef MAIN_FUNCTIONS_HPP
+#define MAIN_FUNCTIONS_HPP
 
 void add_wagon(train * train_ptr);
 
