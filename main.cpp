@@ -4,6 +4,7 @@
 #include "wagon_for_people.hpp"
 #include "train.hpp"
 #include "functions.hpp"
+#include "myexceptions.hpp"
 
 int main(){
   std::vector<train*> train_contener;
@@ -18,18 +19,28 @@ int main(){
         break;
       }
       case '2':{
-        train * train_ptr = NULL;
-        if(find_train(train_contener, &train_ptr)){
-          add_wagon(train_ptr);
+        if(!train_contener.size()){
+          train * train_ptr = NULL;
+          std::vector<train*>::iterator train_itr = train_contener.end();
+          if(find_train(train_contener, &train_ptr, train_itr)){
+            add_wagon(train_ptr);
+          }
+          break;
         }
-        break;
+        else std::cout << LINE << "\nTrain contener is empty.\n" << LINE << std::endl;
       }
       case '3':{
-        show_trains(train_contener);
+        if(!train_contener.size()){
+          show_trains(train_contener);
+        }
+        else std::cout << LINE << "\nTrain contener is empty.\n" << LINE << std::endl;
         break;
       }
       case '4':{
-        delete_train_wagon(train_contener);
+        if(!train_contener.size()){
+          delete_train_wagon(train_contener);
+        }
+        else std::cout << LINE << "\nTrain contener is empty.\n" << LINE << std::endl;
         break;
       }
       case 'q':

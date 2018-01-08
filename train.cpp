@@ -63,6 +63,7 @@ void train::delete_wagon(){
         wagon * wagon_ptr = *it;
         this->lwagons.remove(*it);
         delete wagon_ptr;
+        this->decrease_number();
         break;
       }
     }

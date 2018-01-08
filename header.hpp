@@ -7,6 +7,7 @@
 #include <list>
 #include <limits>
 #include <exception>
+#include <algorithm>
 
 #define LINE "-------------------------------------------------------------"
 
