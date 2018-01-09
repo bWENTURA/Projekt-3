@@ -3,7 +3,7 @@
 #include "wagon.hpp"
 #include "train.hpp"
 
-train::train(int number_person, int number_wagon) : number_of_personnel(number_person), number_of_wagons(number_wagon) {}
+train::train(unsigned int number_person, unsigned int number_wagon) : number_of_personnel(number_person), number_of_wagons(number_wagon) {}
 
 train::~train(){
   for(wagon * iterator: this->lwagons){
@@ -19,20 +19,19 @@ void train::decrease_number(){
   this->number_of_wagons--;
 }
 
-bool train::get_number(std::istream& in, int &number){
-  in.exceptions(in.failbit);
-  try{
-    in >> number;
-  }
-  catch(std::exception& exception){
+void train::get_number(std::istream& in, unsigned int &number){
+  std::string temp;
+  while(1){
+    try{
+      correct_string(in, temp);
+      unsigned_int_check(temp);
+      number = stoi(temp);
+      break;
+    }
+    catch(std::exception& exception){
     std::cerr << "Exception happened: \"" << exception.what() << "\"" << std::endl;
-    in.clear();
-    in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
-    return false;
+    }
   }
-  in.clear();
-  in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
-  return true;
 }
 
 std::string train::get_name(){
@@ -44,16 +43,13 @@ void train::create_wagon(wagon* new_wagon){
   this->lwagons.push_back(new_wagon);
   this->increase_number();
   new_wagon->set_number(this->number_of_wagons);
-  // std::cout << *new_wagon;
 }
 
 void train::delete_wagon(){
-  int number, temp_number = 0;
+  unsigned int number, temp_number = 0;
   std::list<wagon*>::iterator it;
   std::cout << "Enter number of the wagon you want to delete." << std::endl;
-  while(!this->get_number(std::cin, number)){
-    std::cout << "Enter the number again." << std::endl;
-  }
+  this->get_number(std::cin, number);
   if(number <= this->number_of_wagons){
     for(it = this->lwagons.begin(); it != this->lwagons.end(); ++it){
       temp_number++;
@@ -80,9 +76,7 @@ std::istream& operator>>(std::istream& in, train& this_train){
   std::cout << "Please enter description of the train." << std::endl;
   correct_string(in, this_train.description);
   std::cout << "Please enter number of personnel in train." << std::endl;
-  while(!this_train.get_number(in, this_train.number_of_personnel)){
-    std::cout << "Please enter number of personnel again." << std::endl;
-  }
+  this_train.get_number(in, this_train.number_of_personnel);
   return in;
 }
 

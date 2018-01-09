@@ -16,3 +16,11 @@ empty_input::~empty_input() {}
 too_many_signs::too_many_signs() {}
 
 too_many_signs::~too_many_signs() {}
+
+is_negative::is_negative() {}
+
+is_negative::~is_negative() {}
+
+input_starts_with_wspc::input_starts_with_wspc() {}
+
+input_starts_with_wspc::~input_starts_with_wspc() {}

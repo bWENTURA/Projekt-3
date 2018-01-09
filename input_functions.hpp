@@ -7,4 +7,6 @@ char correct_character_input(char maximum, char exception = '1');
 
 void correct_string(std::istream &in, std::string & str_ref);
 
+void unsigned_int_check(std::string);
+
 #endif

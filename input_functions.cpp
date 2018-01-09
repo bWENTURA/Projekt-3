@@ -44,11 +44,21 @@ void correct_string(std::istream &in, std::string & str_ref){
   while(1){
     try{
       getline(in, str_ref);
-      if(str_ref.size()) break;
-      else throw empty_input();
+      if(str_ref.size()){
+        if(str_ref[0] == ' ') throw input_starts_with_wspc();
+        break;
+      }
+      throw empty_input();
     }
     catch(std::exception & myexcp){
-      std::cerr << "Exception : \"" << myexcp.what() << "\"" << std::endl;;
+      std::cerr << "Exception : \"" << myexcp.what() << "\"" << std::endl;
     }
+  }
+}
+
+void unsigned_int_check(std::string temp){
+  if(temp[0] == '-') throw is_negative();
+  for(std::string::iterator it = temp.begin(); it != temp.end(); ++it){
+    if(!isdigit(*it)) throw wrong_sign();
   }
 }

@@ -4,14 +4,14 @@
 class train{
   std::string name;
   std::string description;
-  int number_of_personnel;
-  int number_of_wagons;
+  unsigned int number_of_personnel;
+  unsigned int number_of_wagons;
   std::list<wagon*> lwagons;
   void increase_number();
   void decrease_number();
-  bool get_number(std::istream& in, int &number);
+  void get_number(std::istream& in, unsigned int &number);
   public:
-  train(int number_person = 0, int number_waggon = 0);
+  train(unsigned int number_person = 0, unsigned int number_waggon = 0);
   ~train();
   std::string get_name();
   void create_wagon(wagon* new_wagon);

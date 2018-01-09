@@ -33,4 +33,20 @@ struct too_many_signs : public std::exception{
   }
 };
 
+struct is_negative : public std::exception{
+  is_negative();
+  ~is_negative();
+  const char* what() const throw() {
+    return "Given number is negative.";
+  }
+};
+
+struct input_starts_with_wspc : public std::exception{
+  input_starts_with_wspc();
+  ~input_starts_with_wspc();
+  const char* what() const throw() {
+    return "Given input starts with whitespace.";
+  }
+};
+
 #endif

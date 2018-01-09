@@ -3,27 +3,26 @@
 #include "wagon.hpp"
 #include "material_wagon.hpp"
 
-material_wagon::material_wagon(int number, bool empty, int weight) : number(number), empty(empty), weight(weight) {}
+material_wagon::material_wagon(unsigned int number, bool empty, unsigned int weight) : number(number), empty(empty), weight(weight) {}
 
 material_wagon::~material_wagon() {}
 
-bool material_wagon::get_weight(std::istream& in){
-  in.exceptions(in.failbit);
-  try{
-    in >> this->weight;
-  }
-  catch(std::exception& exception){
+void material_wagon::get_weight(std::istream& in, unsigned int & number){
+  std::string temp;
+  while(1){
+    try{
+      correct_string(in, temp);
+      unsigned_int_check(temp);
+      number = stoi(temp);
+      break;
+    }
+    catch(std::exception& exception){
     std::cerr << "Exception happened: \"" << exception.what() << "\"" << std::endl;
-    in.clear();
-    in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
-    return false;
+    }
   }
-  in.clear();
-  in.ignore(std::numeric_limits<std::streamsize >::max(), '\n');
-  return true;
 }
 
-void material_wagon::set_number(int number){
+void material_wagon::set_number(unsigned int number){
   this->number = number;
 }
 
@@ -41,9 +40,7 @@ void material_wagon::get(std::istream& in){
     case '2':{
     this->empty = false;
     std::cout << "Please enter weight of the material.(in kilograms)" << std::endl;
-    while(!this->get_weight(in)){
-      std::cout << "Please enter weight again." << std::endl;
-    }
+    this->get_weight(in, this->weight);
     break;
     }
   }
