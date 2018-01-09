@@ -9,7 +9,6 @@ class train{
   std::list<wagon*> lwagons;
   void increase_number();// Metoda zwiększająca wartość number_of_wagons
   void decrease_number();// Metoda zmniejszająca wartość number_of_wagons
-  void get_number(std::istream& in, unsigned int &number);// Metoda pobierająca liczbę z wejścia do odpowiedniego pola
   public:
   train(unsigned int number_person = 0, unsigned int number_waggon = 0);// Konstruktor
   ~train();// Destruktor

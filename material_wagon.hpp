@@ -6,14 +6,13 @@ class material_wagon : public wagon{
   std::string material;
   bool empty;
   unsigned int weight;
-  void get_weight(std::istream& in, unsigned int & number);
   public:
   material_wagon(unsigned int number = 0, bool empty = true, unsigned int weight = 0);
   ~material_wagon();
-  void set_number(unsigned int number);
-  void get_info(std::istream& in);
-  void print_info(std::ostream& out) const;
-  std::string get_class();
+  void set_number(unsigned int number);// Metoda do ustawiania wartości pola number
+  void get_info(std::istream& in);// Metoda wywoływana w przeciążonym operatorze wejścia dla klasy bazowej
+  void print_info(std::ostream& out) const; //Metoda wywoływana w przeciążonym operatorze wyjścia dla klasy bazowej
+  std::string get_class();// Metoda zwracająca nazwę klasy
 };
 
 #endif

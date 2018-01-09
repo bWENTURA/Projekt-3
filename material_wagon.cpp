@@ -7,26 +7,12 @@ material_wagon::material_wagon(unsigned int number, bool empty, unsigned int wei
 
 material_wagon::~material_wagon() {}
 
-void material_wagon::get_weight(std::istream& in, unsigned int & number){
-  std::string temp;
-  while(1){
-    try{
-      correct_string(in, temp);
-      unsigned_int_check(temp);
-      number = stoi(temp);
-      break;
-    }
-    catch(std::exception& exception){
-    std::cerr << "Exception happened: \"" << exception.what() << "\"" << std::endl;
-    }
-  }
-}
-
 void material_wagon::set_number(unsigned int number){
   this->number = number;
 }
 
 void material_wagon::get_info(std::istream& in){
+  // Funkcja działająca jak przeciążony operator wejścia dla klasy train
   char operation;
   std::cout << "Please enter name of the material in material wagon." << std::endl;
   correct_string(in, this->material);
@@ -40,13 +26,14 @@ void material_wagon::get_info(std::istream& in){
     case '2':{
     this->empty = false;
     std::cout << "Please enter weight of the material.(in kilograms)" << std::endl;
-    this->get_weight(in, this->weight);
+    get_number(in, this->weight);
     break;
     }
   }
 }
 
 void material_wagon::print_info(std::ostream& out) const{
+  // Funkcja działająca jak przeciążony operator wyjścia dla klasy train
   out << LINE << "\n";
   out << "Number of wagon: " << this->number << ".\n";
   out << "Material: " << this->material << ".\n";

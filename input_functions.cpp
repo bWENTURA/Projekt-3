@@ -58,3 +58,20 @@ void unsigned_int_check(std::string temp){
     if(!isdigit(*it)) throw wrong_sign();
   }
 }
+
+void get_number(std::istream& in, unsigned int & number){
+  std::string temp;
+  while(1){
+    try{
+      // Wywołanie funkcji pozyskujących ciąg znaków i sprawdzzających go pod kątem wyjątków
+      correct_string(in, temp);
+      unsigned_int_check(temp);
+      // Użycie funkcji stoi konwertującej string na int
+      number = stoi(temp);
+      break;
+    }
+    catch(std::exception& exception){
+      std::cerr << "Exception happened: \"" << exception.what() << "\"" << std::endl;
+    }
+  }
+}

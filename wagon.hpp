@@ -11,7 +11,7 @@ class wagon{
   virtual std::string get_class() = 0;
 };
 
-std::istream& operator>>(std::istream& in, wagon& this_wagon);
-std::ostream& operator<<(std::ostream& out, const wagon& this_wagon);
+std::istream& operator>>(std::istream& in, wagon& this_wagon);// Przeciążony operator wejścia wywołuje funkcje wirtualną get_info
+std::ostream& operator<<(std::ostream& out, const wagon& this_wagon);// Przeciążony operator wyjścia wywołuje funkcje wirtualną print_info
 
 #endif
