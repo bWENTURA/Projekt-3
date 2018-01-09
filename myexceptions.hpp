@@ -49,4 +49,12 @@ struct input_starts_with_wspc : public std::exception{
   }
 };
 
+struct train_with_name_already_exists : public std::exception{
+  train_with_name_already_exists();
+  ~train_with_name_already_exists();
+  const char* what() const throw() {
+    return "Train_with_name_already_exists.";
+  }
+};
+
 #endif

@@ -24,3 +24,7 @@ is_negative::~is_negative() {}
 input_starts_with_wspc::input_starts_with_wspc() {}
 
 input_starts_with_wspc::~input_starts_with_wspc() {}
+
+train_with_name_already_exists::train_with_name_already_exists() {}
+
+train_with_name_already_exists::~train_with_name_already_exists() {}

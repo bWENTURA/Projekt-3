@@ -89,6 +89,7 @@ void train::create_wagon(wagon* new_wagon){
 void train::delete_wagon(){
   unsigned int number, temp_number = 0;
   std::list<wagon*>::iterator it;
+  // Wyświetlenie zawartości obiektu pod wskaźnikiem train_ptr za pomocą przeciążonego operatora <<
   std::cout << *this;
   std::cout << "Enter number of the wagon you want to delete." << std::endl;
   this->get_number(std::cin, number);
@@ -110,7 +111,7 @@ void train::delete_wagon(){
       }
     }
   }
-  else std::cout << "Wrong number has been entered." << std::endl;
+  else std::cout << LINE << "\nWrong number has been entered.\n" << LINE << std::endl;
 }
 
 std::istream& operator>>(std::istream& in, train& this_train){

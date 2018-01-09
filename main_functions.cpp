@@ -1,4 +1,5 @@
 #include "header.hpp"
+#include "myexceptions.hpp"
 #include "input_functions.hpp"
 #include "wagon.hpp"
 #include "material_wagon.hpp"
@@ -19,7 +20,10 @@ bool compare_back(train * ptr_1, train * ptr_2){
 }
 
 void add_wagon(train * train_ptr){
+  // Zmienna pomocnicza określająca możliwość wyjścia z pętli
   bool exit = false;
+  // Zmienna, w której przechowywany jest znak odpowiadający numerowi operacji, którą użytkownik będzie chciał wywołać
+  // Wartość zmiennej jest ustawiana za pomocą funkcji correct_character_input, której kod znajduje się w pliku input_functions.cpp
   char operation;
   while(!exit){
     std::cout << LINE << "\n1. Add wagon for materials.\n" <<"2. Add wagon for people.\n" << "Type 'q' to exit.\n" << LINE << std::endl;
@@ -27,9 +31,11 @@ void add_wagon(train * train_ptr){
     switch(operation){
       case '1':{
         try{
+          // W  case '1' i '2' tworzone są odpowiednie, wybrane przez użytkownika obiekty, a następnie wywoływana jest metoda klasy train
+          // dodająca obiekt wagon do listy obiektu train
           wagon * wagon_ptr = new material_wagon();
           train_ptr->create_wagon(wagon_ptr);
-        }
+        }// Blok catch aby wyłapać wyjątki związane ze złą alokacją pamięci dla obiektu typu wagon
         catch(const std::bad_alloc & excp){
           std::cerr << "Exception, bad alloc: \"" << excp.what() << "\"" << std::endl;
         }
@@ -56,22 +62,34 @@ void add_wagon(train * train_ptr){
 void add_train(std::vector<train*> &train_contener){
   try{
     train * train_ptr = new train();
+    // Wywołanie operatora >> dla obiektu typu train, w celu wprowadzenia do niego danych
+    // Kod przeciążenia operatora znajduje się w train.cpp
     std::cin >> *train_ptr;
+    // Sprawdzenie czy nie istnieje już obiekt o takiej nazwie jaką posiada nowo utworzony biekt typu train
+    for(std::vector<train*>::iterator it = train_contener.begin(); it != train_contener.end(); ++it){
+      if((*it)->get_name() == train_ptr->get_name()){
+        delete train_ptr;
+        throw train_with_name_already_exists();
+      }
+    }
+    // Wywołanie funkcji add_wagon, tak aby od razu można było dodać obiekty typu wagon do nowo stworzonego obiektu typu train
     add_wagon(train_ptr);
     train_contener.push_back(train_ptr);
-  }
-  catch(const std::bad_alloc & excp){
-    std::cerr << "Exception, bad alloc: \"" << excp.what() << "\"" << std::endl;
+  }// Blok catch aby wyłapać wyjątki związane ze złą alokacją pamięci dla obiektu typu wagon
+  catch(const std::exception & excp){
+    std::cerr << LINE << "\nException: \"" << excp.what() << "\"\n" << LINE << std::endl;
   }
 }
 
 bool find_train(std::vector<train*> &train_contener, train ** train_ptr, std::vector<train*>::iterator &train_itr){
   std::string name;
-  std::vector<train*>::iterator it;
   std::cout << LINE << "\nEnter name of the train you are looking for.\n" << LINE << std::endl;
+  // Funkcja correct_string sprawdzająca poprawność wprowadzanego ciągu znaków, której kod znajduje się w input_functions.cpp
   correct_string(std::cin, name);
-  for(it = train_contener.begin(); it != train_contener.end(); ++it){
+  for(std::vector<train*>::iterator it = train_contener.begin(); it != train_contener.end(); ++it){
+    // Sprawdzenie czy nazwa obiektu zwrócona przez metodę get_name klasy train jest szukaną przez użytkownika nazwą
     if((*it)->get_name() == name){
+      // Zapisanie potrzebnych informacji w argumentach
       *train_ptr = *it;
       if(train_itr != train_contener.end()) train_itr = it;
       return true;
@@ -95,11 +113,15 @@ void delete_train_wagon(std::vector<train*> &train_contener){
     operation = correct_character_input('2', 'q');
     switch(operation){
       case '1':{
+        // Wstępne wartości przekazane jako argumenty do funkcji find_train
+        // Jeżeli funkcja zwróci wartośc true, w zmiennych zostaną zapisane odpowiednie informacje
         train * train_ptr = NULL;
         std::vector<train*>::iterator train_itr = train_contener.begin();
         if(find_train(train_contener, &train_ptr, train_itr)){
+          // Dzięki uzyskaniu z funkcji find_train wartości train_itr, możemy usunąć obiekt z kontenera zachowując jego spójność
           train_contener.erase(train_itr);
           std::cout << LINE << "\nTrain \"" << train_ptr->get_name() << "\" was deleted.\n" << LINE << std::endl;
+          // Dzięki zapisaniu wskaźnika do usuwanego z kontenera obiektu, można teraz wywołać destruktor aby uniknąć wycieków pamięci
           delete train_ptr;
         }
         break;
@@ -108,8 +130,9 @@ void delete_train_wagon(std::vector<train*> &train_contener){
         train * train_ptr = NULL;
         std::vector<train*>::iterator train_itr = train_contener.end();
         if(find_train(train_contener, &train_ptr, train_itr)){
+          // Sprawdzenie czy wyszukany obiekt typu pociąg posiada jakiekolwiek obiekty typu wagon
           if(!train_ptr->empty()){
-            std::cout << *train_ptr;
+            // Wywołanie funkcji delete_wagon
             train_ptr->delete_wagon();
           }
           else std::cout << LINE << "\nTrain \"" << train_ptr->get_name() << "\" hasn't got wagons.\n" << LINE << std::endl;
@@ -135,6 +158,7 @@ void edit_train_wagon(std::vector<train*> &train_contener){
         train * train_ptr = NULL;
         std::vector<train*>::iterator train_itr = train_contener.end();
         if(find_train(train_contener, &train_ptr, train_itr)){
+          // Wywołanie metody edit_info edytującej informacje o obiekcie typu train
           train_ptr->edit_info();
           std::cout << LINE << "\nTrain \"" << train_ptr->get_name() << "\" was edited.\n" << LINE << std::endl;
         }
@@ -145,6 +169,7 @@ void edit_train_wagon(std::vector<train*> &train_contener){
         std::vector<train*>::iterator train_itr = train_contener.end();
         if(find_train(train_contener, &train_ptr, train_itr)){
           if(!train_ptr->empty()){
+            // Wywołanie metody edit_wagon_info klasy train wyszukującej pożądany obiekt typu wagon i edytującej informacje o obiekcie typu wagon
             train_ptr->edit_wagon_info();
           }
           else std::cout << LINE << "\nTrain \"" << train_ptr->get_name() << "\" hasn't got wagons.\n" << LINE << std::endl;
@@ -165,6 +190,7 @@ void sort_trains(std::vector<train*> &train_contener){
   operation = correct_character_input('3');
   switch(operation){
     case '1':{
+      // Wywołanie algorytmu z biblioteki stl algorithm
       std::sort(train_contener.begin(), train_contener.end(), compare_alpha);
       break;
     }

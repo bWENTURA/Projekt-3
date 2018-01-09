@@ -2,34 +2,25 @@
 #include "myexceptions.hpp"
 #include "input_functions.hpp"
 
-//Funkcja sprawdzająca czy został poprawnie wprowadzony pojedynczy znak
 void character_input(char &operation){
   std::string temp;
+  // Użycie innej funkcji by sprawdzić poprawność ciągu znaków
   correct_string(std::cin, temp);
-  switch(temp.size()){
-    case 1:{
-      operation = temp[0];
-      break;
-    }
-    case 0:{
-      throw empty_input();
-      break;
-    }
-    default:{
-      throw too_many_signs();
-      break;
-    }
+  if(temp.size() == 1){
+    // Zapisanie pod argumentem podtrzebne informacji
+    operation = temp[0];
   }
+  // Rzucenie wyjątku informującego o za dużej ilości znaków
+  else throw too_many_signs();
 }
 
-//Funkcja sprawdzająca czy wprowadzony poprawnie pojedynczy znak mieści się w wymaganym zakresie
-//Funkcja używana wyłącznie do wyboru liczb z zakresu [1, maximum], ewentualnie pojedynczego znaku exception
-//Funkcja mająca głównie zastosowanie w wyborze opcji z menu
 char correct_character_input(char maximum, char exception){
   char sign;
   while(1){
     try{
+      // Skorzystanie z funkcji sprawdzającej poprawność wprowadzonego ciągu znaków
       character_input(sign);
+      // Rzucenie wyjątku jeżeli ciąg znaków nie spełnia podanych wymagań
       if(!(sign == exception || (sign <= maximum && sign >= '1'))) throw wrong_sign();
       else break;
     }
@@ -43,8 +34,11 @@ char correct_character_input(char maximum, char exception){
 void correct_string(std::istream &in, std::string & str_ref){
   while(1){
     try{
+      // Wczytanie ciągu znaków
       getline(in, str_ref);
+      // Sprawdzenie czy ciąg nie jest pusty
       if(str_ref.size()){
+        // Rzucenie wyjątku jeżeli ciąg zaczyna się od whitespace
         if(str_ref[0] == ' ') throw input_starts_with_wspc();
         break;
       }
@@ -57,8 +51,10 @@ void correct_string(std::istream &in, std::string & str_ref){
 }
 
 void unsigned_int_check(std::string temp){
+  // Rzucenie wyjątku jeżeli ciąg znaków zaczyna się od znaku minus
   if(temp[0] == '-') throw is_negative();
   for(std::string::iterator it = temp.begin(); it != temp.end(); ++it){
+    // Rzucenie wyjątku jeżeli, któryś znak w ciągu znaków nie jest liczbą
     if(!isdigit(*it)) throw wrong_sign();
   }
 }
