@@ -6,6 +6,18 @@
 #include "train.hpp"
 #include "main_functions.hpp"
 
+bool compare_alpha(train * ptr_1, train * ptr_2){
+  return (ptr_1->get_name() < ptr_2->get_name());
+}
+
+bool compare_front(train * ptr_1, train * ptr_2){
+  return (ptr_1->get_number_of_wagons() > ptr_2->get_number_of_wagons());
+}
+
+bool compare_back(train * ptr_1, train * ptr_2){
+  return (ptr_1->get_number_of_wagons() < ptr_2->get_number_of_wagons());
+}
+
 void add_wagon(train * train_ptr){
   bool exit = false;
   char operation;
@@ -145,18 +157,6 @@ void edit_train_wagon(std::vector<train*> &train_contener){
       }
     }
   }
-}
-
-bool compare_alpha(train * ptr_1, train * ptr_2){
-  return (ptr_1->get_name() < ptr_2->get_name());
-}
-
-bool compare_front(train * ptr_1, train * ptr_2){
-  return (ptr_1->get_number_of_wagons() > ptr_2->get_number_of_wagons());
-}
-
-bool compare_back(train * ptr_1, train * ptr_2){
-  return (ptr_1->get_number_of_wagons() < ptr_2->get_number_of_wagons());
 }
 
 void sort_trains(std::vector<train*> &train_contener){
