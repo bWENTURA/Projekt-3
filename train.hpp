@@ -14,6 +14,10 @@ class train{
   train(unsigned int number_person = 0, unsigned int number_waggon = 0);
   ~train();
   std::string get_name();
+  int get_number_of_wagons();
+  bool empty();
+  void edit_info();
+  void edit_wagon_info();
   void create_wagon(wagon* new_wagon);
   void delete_wagon();
   friend std::istream& operator>>(std::istream& in, train& this_train);

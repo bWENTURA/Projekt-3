@@ -6,8 +6,9 @@ class wagon{
   wagon(){};
   virtual ~wagon(){};
   virtual void set_number(unsigned int number) = 0;
-  virtual void print(std::ostream& out) const = 0;
-  virtual void get(std::istream& in) = 0;
+  virtual void print_info(std::ostream& out) const = 0;
+  virtual void get_info(std::istream& in) = 0;
+  virtual std::string get_class() = 0;
 };
 
 std::istream& operator>>(std::istream& in, wagon& this_wagon);

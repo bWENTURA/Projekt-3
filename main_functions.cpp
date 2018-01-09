@@ -10,7 +10,7 @@ void add_wagon(train * train_ptr){
   bool exit = false;
   char operation;
   while(!exit){
-    std::cout << LINE << "\n1. Add wagon for materials.\n" <<"2. Add wagon for people to created train.\n" << "Type 'q' to exit.\n" << LINE << std::endl;
+    std::cout << LINE << "\n1. Add wagon for materials.\n" <<"2. Add wagon for people.\n" << "Type 'q' to exit.\n" << LINE << std::endl;
     operation = correct_character_input('2', 'q');
     switch(operation){
       case '1':{
@@ -57,7 +57,7 @@ bool find_train(std::vector<train*> &train_contener, train ** train_ptr, std::ve
   std::string name;
   std::vector<train*>::iterator it;
   std::cout << LINE << "\nEnter name of the train you are looking for.\n" << LINE << std::endl;
-  getline(std::cin, name);
+  correct_string(std::cin, name);
   for(it = train_contener.begin(); it != train_contener.end(); ++it){
     if((*it)->get_name() == name){
       *train_ptr = *it;
@@ -89,7 +89,6 @@ void delete_train_wagon(std::vector<train*> &train_contener){
           train_contener.erase(train_itr);
           std::cout << LINE << "\nTrain \"" << train_ptr->get_name() << "\" was deleted.\n" << LINE << std::endl;
           delete train_ptr;
-          break;
         }
         break;
       }
@@ -97,8 +96,11 @@ void delete_train_wagon(std::vector<train*> &train_contener){
         train * train_ptr = NULL;
         std::vector<train*>::iterator train_itr = train_contener.end();
         if(find_train(train_contener, &train_ptr, train_itr)){
-          std::cout << *train_ptr;
-          train_ptr->delete_wagon();
+          if(!train_ptr->empty()){
+            std::cout << *train_ptr;
+            train_ptr->delete_wagon();
+          }
+          else std::cout << LINE << "\nTrain \"" << train_ptr->get_name() << "\" hasn't got wagons.\n" << LINE << std::endl;
         }
         break;
       }
@@ -106,6 +108,73 @@ void delete_train_wagon(std::vector<train*> &train_contener){
         exit = true;
         break;
       }
+    }
+  }
+}
+
+void edit_train_wagon(std::vector<train*> &train_contener){
+  bool exit = false;
+  char operation;
+  while(!exit){
+    std::cout << LINE << "\n1. Edit train.\n" << "2. Edit wagon.\n" << "Type 'q' to exit.\n" << LINE << std::endl;
+    operation = correct_character_input('2', 'q');
+    switch(operation){
+      case '1':{
+        train * train_ptr = NULL;
+        std::vector<train*>::iterator train_itr = train_contener.end();
+        if(find_train(train_contener, &train_ptr, train_itr)){
+          train_ptr->edit_info();
+          std::cout << LINE << "\nTrain \"" << train_ptr->get_name() << "\" was edited.\n" << LINE << std::endl;
+        }
+        break;
+      }
+      case '2':{
+        train * train_ptr = NULL;
+        std::vector<train*>::iterator train_itr = train_contener.end();
+        if(find_train(train_contener, &train_ptr, train_itr)){
+          if(!train_ptr->empty()){
+            train_ptr->edit_wagon_info();
+          }
+          else std::cout << LINE << "\nTrain \"" << train_ptr->get_name() << "\" hasn't got wagons.\n" << LINE << std::endl;
+        }
+        break;
+      }
+      case 'q':{
+        exit = true;
+        break;
+      }
+    }
+  }
+}
+
+bool compare_alpha(train * ptr_1, train * ptr_2){
+  return (ptr_1->get_name() < ptr_2->get_name());
+}
+
+bool compare_front(train * ptr_1, train * ptr_2){
+  return (ptr_1->get_number_of_wagons() > ptr_2->get_number_of_wagons());
+}
+
+bool compare_back(train * ptr_1, train * ptr_2){
+  return (ptr_1->get_number_of_wagons() < ptr_2->get_number_of_wagons());
+}
+
+void sort_trains(std::vector<train*> &train_contener){
+  char operation;
+  std::cout << LINE << "\n1. Sort trains alphabetically.\n" << "2. Sort trains so these with more wagons will be on front.\n" << "3. Sort trains so these with more wagons will be on back.\n" << LINE << std::endl;
+  operation = correct_character_input('3');
+  switch(operation){
+    case '1':{
+      std::sort(train_contener.begin(), train_contener.end(), compare_alpha);
+      break;
+    }
+    case '2':{
+      std::sort(train_contener.begin(), train_contener.end(), compare_front);
+      break;
+    }
+    case '3':{
+      std::sort(train_contener.begin(), train_contener.end(), compare_back);
+      break;
     }
   }
 }

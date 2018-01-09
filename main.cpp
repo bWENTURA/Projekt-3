@@ -11,8 +11,8 @@ int main(){
   bool exit = false;
   char operation;
   while(exit != true){
-    std::cout << "Please enter the number of the operation you want to execute.\n" << "1. Create train.\n" << "2. Create wagon.\n" << "3. Show trains.\n" << "4. Delete wagon or train.\n" << "Type 'q' to exit.\n" << LINE << std::endl;
-    operation = correct_character_input('4', 'q');
+    std::cout << "Please enter the number of the operation you want to execute.\n" << "1. Create train.\n" << "2. Create wagon.\n" << "3. Show trains.\n" << "4. Delete train or wagon.\n" << "5. Edit train or wagon info.\n" << "6. Sort trains.\n" << "Type 'q' to exit.\n" << LINE << std::endl;
+    operation = correct_character_input('6', 'q');
     switch(operation){
       case '1':{
         add_train(train_contener);
@@ -39,6 +39,20 @@ int main(){
       case '4':{
         if(train_contener.size()){
           delete_train_wagon(train_contener);
+        }
+        else std::cout << LINE << "\nTrain contener is empty.\n" << LINE << std::endl;
+        break;
+      }
+      case '5':{
+        if(train_contener.size()){
+          edit_train_wagon(train_contener);
+        }
+        else std::cout << LINE << "\nTrain contener is empty.\n" << LINE << std::endl;
+        break;
+      }
+      case '6':{
+        if(train_contener.size()){
+          sort_trains(train_contener);
         }
         else std::cout << LINE << "\nTrain contener is empty.\n" << LINE << std::endl;
         break;

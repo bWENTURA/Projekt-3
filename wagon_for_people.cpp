@@ -26,7 +26,7 @@ void wagon_for_people::set_number(unsigned int number){
   this->number = number;
 }
 
-void wagon_for_people::get(std::istream& in){
+void wagon_for_people::get_info(std::istream& in){
   char operation;
   std::cout << "Please enter number of sitting places." << std::endl;
   this->get_number_of_sitting_places(in, this->number_of_sitting_places);
@@ -56,7 +56,7 @@ void wagon_for_people::get(std::istream& in){
   }
 }
 
-void wagon_for_people::print(std::ostream& out) const{
+void wagon_for_people::print_info(std::ostream& out) const{
   out << LINE << "\n";
   out << "Number of wagon: " << this->number << ".\n";
   out << "Number of sitting places: " << this->number_of_sitting_places << ".\n";
@@ -64,5 +64,9 @@ void wagon_for_people::print(std::ostream& out) const{
   else out << "Wagon hasn't got place for bikes." << "\n";
   if(this->restaurant) out << "Wagon has restaurant." << std::endl;
   else out << "Wagon hasn't got restaurant." << std::endl;
-  out << LINE << std::endl;
+}
+
+std::string wagon_for_people::get_class(){
+  std::string class_name = "People";
+  return class_name;
 }

@@ -11,8 +11,9 @@ class material_wagon : public wagon{
   material_wagon(unsigned int number = 0, bool empty = true, unsigned int weight = 0);
   ~material_wagon();
   void set_number(unsigned int number);
-  void print(std::ostream& out) const;
-  void get(std::istream& in);
+  void get_info(std::istream& in);
+  void print_info(std::ostream& out) const;
+  std::string get_class();
 };
 
 #endif

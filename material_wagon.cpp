@@ -26,7 +26,7 @@ void material_wagon::set_number(unsigned int number){
   this->number = number;
 }
 
-void material_wagon::get(std::istream& in){
+void material_wagon::get_info(std::istream& in){
   char operation;
   std::cout << "Please enter name of the material in material wagon." << std::endl;
   correct_string(in, this->material);
@@ -46,7 +46,7 @@ void material_wagon::get(std::istream& in){
   }
 }
 
-void material_wagon::print(std::ostream& out) const{
+void material_wagon::print_info(std::ostream& out) const{
   out << LINE << "\n";
   out << "Number of wagon: " << this->number << ".\n";
   out << "Material: " << this->material << ".\n";
@@ -56,5 +56,9 @@ void material_wagon::print(std::ostream& out) const{
   else{
     out << "Weight: " << this->weight << " kg." << std::endl;
   }
-  out << LINE << std::endl;
+}
+
+std::string material_wagon::get_class(){
+  std::string class_name = "Material";
+  return class_name;
 }
