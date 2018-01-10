@@ -12,7 +12,7 @@ void wagon_for_people::set_number(unsigned int number){
 }
 
 void wagon_for_people::get_info(std::istream& in){
-  // Funkcja działająca jak przeciążony operator wejścia dla klasy train
+  // Metoda działająca jak przeciążony operator wejścia dla klasy train
   char operation;
   std::cout << "Please enter number of sitting places." << std::endl;
   get_number(in, this->number_of_sitting_places);
@@ -43,7 +43,7 @@ void wagon_for_people::get_info(std::istream& in){
 }
 
 void wagon_for_people::print_info(std::ostream& out) const{
-  // Funkcja działająca jak przeciążony operator wyjścia dla klasy train
+  // Metoda działająca jak przeciążony operator wyjścia dla klasy train
   out << LINE << "\n";
   out << "Number of wagon: " << this->number << ".\n";
   out << "Number of sitting places: " << this->number_of_sitting_places << ".\n";

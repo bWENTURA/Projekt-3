@@ -12,7 +12,7 @@ void material_wagon::set_number(unsigned int number){
 }
 
 void material_wagon::get_info(std::istream& in){
-  // Funkcja działająca jak przeciążony operator wejścia dla klasy train
+  // Metoda działająca jak przeciążony operator wejścia dla klasy train
   char operation;
   std::cout << "Please enter name of the material in material wagon." << std::endl;
   correct_string(in, this->material);
@@ -33,7 +33,7 @@ void material_wagon::get_info(std::istream& in){
 }
 
 void material_wagon::print_info(std::ostream& out) const{
-  // Funkcja działająca jak przeciążony operator wyjścia dla klasy train
+  // Metoda działająca jak przeciążony operator wyjścia dla klasy train
   out << LINE << "\n";
   out << "Number of wagon: " << this->number << ".\n";
   out << "Material: " << this->material << ".\n";

@@ -95,7 +95,7 @@ bool find_train(std::vector<train*> &train_contener, train ** train_ptr, std::ve
       return true;
     }
   }
-  std::cout << LINE << "\nProgram couldn't find train with name \"" << name << "\".\n" << LINE << std::endl;
+  std::cout << LINE << "\nProgram couldn't find train with name \"" << name << "\"." << std::endl;
   return false;
 }
 
