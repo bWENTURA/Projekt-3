@@ -12,17 +12,12 @@ train::~train(){
   }
 }
 
-void train::increase_number(){
-  this->number_of_wagons++;
+std::string train::get_name(){
+  return this->name;
 }
 
-void train::decrease_number(){
-  this->number_of_wagons--;
-}
-
-bool train::empty(){
-  if(this->number_of_wagons) return false;
-  return true;
+int train::get_number_of_wagons(){
+  return this->number_of_wagons;
 }
 
 void train::edit_info(){
@@ -46,17 +41,9 @@ void train::edit_wagon_info(){
   else std::cout << "Wrong number has been entered." << std::endl;
 }
 
-std::string train::get_name(){
-  return this->name;
-}
-
-int train::get_number_of_wagons(){
-  return this->number_of_wagons;
-}
-
 void train::create_wagon(wagon * new_wagon){
   std::cin >> *new_wagon;
-  this->increase_number();
+  this->number_of_wagons++;
   // Sprawdzenie na obiekt jakiej podklasy wskazuje wskaźnik klasy bazowej new_wagon
   if(new_wagon->get_class() == "People"){
     int number = 1;
@@ -93,7 +80,7 @@ void train::delete_wagon(){
     // Użycie remove ponieważ korzystam z iteratora it
     this->lwagons.remove(*it);
     delete wagon_ptr;
-    this->decrease_number();
+    this->number_of_wagons--;
     std::cout << LINE << "\nWagon has been deleted.\n" << LINE << std::endl;
   }
   else std::cout << LINE << "\nWrong number has been entered.\n" << LINE << std::endl;

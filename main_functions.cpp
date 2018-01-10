@@ -131,7 +131,7 @@ void delete_train_wagon(std::vector<train*> &train_contener){
         std::vector<train*>::iterator train_itr = train_contener.end();
         if(find_train(train_contener, &train_ptr, train_itr)){
           // Sprawdzenie czy wyszukany obiekt typu pociąg posiada jakiekolwiek obiekty typu wagon
-          if(!train_ptr->empty()){
+          if(!train_ptr->get_number_of_wagons()){
             // Wywołanie funkcji delete_wagon
             train_ptr->delete_wagon();
           }
@@ -168,7 +168,7 @@ void edit_train_wagon(std::vector<train*> &train_contener){
         train * train_ptr = NULL;
         std::vector<train*>::iterator train_itr = train_contener.end();
         if(find_train(train_contener, &train_ptr, train_itr)){
-          if(!train_ptr->empty()){
+          if(!train_ptr->get_number_of_wagons()){
             // Wywołanie metody edit_wagon_info klasy train wyszukującej pożądany obiekt typu wagon i edytującej informacje o obiekcie typu wagon
             train_ptr->edit_wagon_info();
           }

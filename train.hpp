@@ -7,14 +7,11 @@ class train{
   unsigned int number_of_personnel;
   unsigned int number_of_wagons;
   std::list<wagon*> lwagons;
-  void increase_number();// Metoda zwiększająca wartość number_of_wagons
-  void decrease_number();// Metoda zmniejszająca wartość number_of_wagons
   public:
   train(unsigned int number_person = 0, unsigned int number_waggon = 0);// Konstruktor
   ~train();// Destruktor
   std::string get_name();// Metoda zwracająca ciąg znaków name
   int get_number_of_wagons();// Metoda zwracająca wartość pola number_of_wagons
-  bool empty();// Metoda określająca czy lista obiektów typu wagon jest pusta
   void edit_info();// Metoda edytująca informacje o obkcie typu train
   void edit_wagon_info();// Metoda edytująca informacje o obiekcie typu wagon z listy obiektu typu train
   void create_wagon(wagon* new_wagon);// Metoda tworząca obiekt wagon w liście obiektu train
